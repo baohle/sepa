@@ -33,8 +33,6 @@ module Sepa
       set_common_nodes
       set_nodes_contents
       process_signature
-      puts "Application Request String: #{@application_request.to_s.strip.gsub("\n", "").gsub("dsig:", "").gsub(":dsig", "")}"
-      puts "Application Request: #{@application_request.inspect}"
       puts @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
       @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
     end
@@ -256,11 +254,11 @@ module Sepa
         ).include? @command
 
         signature_node = remove_node('Signature', 'http://www.w3.org/2000/09/xmldsig#')
+        @application_request = Nokogiri::XML @application_request.to_s.gsub(/\n\s+\n/, "\n")
+        puts "Application Request: #{@application_request}"
         digest = calculate_digest
         add_node_to_root(signature_node)
-        puts "Digest Value: #{digest}"
         add_value_to_signature('DigestValue', digest)
-        puts "Signature Value: #{calculate_signature.gsub!("\n", "")}"
         add_value_to_signature('SignatureValue', calculate_signature.gsub!("\n", ""))
         add_value_to_signature('X509Certificate', format_cert(@own_signing_certificate))
       end
