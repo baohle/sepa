@@ -253,7 +253,7 @@ module Sepa
           get_service_certificates
         ).include? @command
 
-        signature_node = remove_node('Signature', 'http://www.w3.org/2000/09/xmldsig#').gsub("\n", "")
+        signature_node = remove_node('Signature', 'http://www.w3.org/2000/09/xmldsig#').replace("\n", "")
         @application_request = Nokogiri::XML @application_request.to_s.gsub(/\n\s+\n/, "\n")
         puts "Application Request: #{@application_request}"
         digest = calculate_digest
