@@ -261,6 +261,10 @@ module Sepa
         add_value_to_signature('DigestValue', digest)
         add_value_to_signature('SignatureValue', calculate_signature.gsub!("\n", ""))
         add_value_to_signature('X509Certificate', format_cert(@own_signing_certificate))
+        signature_node = remove_node('Signature', 'http://www.w3.org/2000/09/xmldsig#')
+        signature_node = Nokogiri::XML signature_node.to_s.gsub("\n", "")
+        @application_request = Nokogiri::XML @application_request.to_s.gsub(/\n\s+\n/, "\n")
+        add_node_to_root(signature_node)
       end
 
       def add_node_after(node, new_node, content:)
