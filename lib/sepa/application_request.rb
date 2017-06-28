@@ -33,7 +33,7 @@ module Sepa
       set_common_nodes
       set_nodes_contents
       process_signature
-      puts "Application Request String: #{@application_request.to_s.strip.gsub("dsig:", "").gsub(":dsig", "")}"
+      puts "Application Request String: #{@application_request.to_s.strip.gsub("\n\n", "\n").gsub("dsig:", "").gsub(":dsig", "")}"
       puts "Application Request: #{@application_request}"
       puts @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
       @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
@@ -91,7 +91,7 @@ module Sepa
       def set_download_file_nodes
         add_node_after('FileReferences', 'TargetId', content: @target_id) if @bank == :nordea
         add_node_after('Timestamp', 'Status', content: @status) if @status.present?
-        # add_node_to_root 'FileType', content: @file_type if @file_type.present?
+        add_node_to_root 'FileType', content: @file_type if @file_type.present?
         set_node("FileReference", @file_reference)
       end
 
