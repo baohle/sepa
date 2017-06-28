@@ -91,7 +91,7 @@ module Sepa
       def set_download_file_nodes
         add_node_after('FileReferences', 'TargetId', content: @target_id) if @bank == :nordea
         add_node_after('Timestamp', 'Status', content: @status) if @status.present?
-        add_node_to_root 'FileType', content: @file_type if @file_type.present?
+        # add_node_to_root 'FileType', content: @file_type if @file_type.present?
         set_node("FileReference", @file_reference)
       end
 
