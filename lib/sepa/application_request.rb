@@ -33,6 +33,7 @@ module Sepa
       set_common_nodes
       set_nodes_contents
       process_signature
+      puts "Application Request String: #{@application_request.to_s}"
       puts "Application Request: #{@application_request}"
       puts @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
       @application_request.to_xml.gsub("dsig:", "").gsub(":dsig", "")
